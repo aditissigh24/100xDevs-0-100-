@@ -11,8 +11,8 @@ if (normalize(str1)===normalize(str2)){
 }
 }
 
-//export default isAnagram;
+export default isAnagram;
 let a="silent";
 let b="listen";
-let c=isAnagram(a,b);
+isAnagram(a,b);
 
