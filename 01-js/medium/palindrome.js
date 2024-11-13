@@ -4,7 +4,11 @@
 */
 
 function isPalindrome(str) {
+   str === str.split('').reverse().join('');
   return true;
 }
 
 module.exports = isPalindrome;
+//example
+const a="naan";
+console.log(isPalindrome(a));
