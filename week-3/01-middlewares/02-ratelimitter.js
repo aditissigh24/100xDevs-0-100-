@@ -15,16 +15,20 @@ let numberOfRequestsForUser = {};
 setInterval(() => {
     numberOfRequestsForUser = {};
 }, 1000)
-app.use((req,res,next)=>{
-  const userId=req.header('user-id')
-  if(!userId){
-    res.status(400).json("userID not found")
+app.use(function(req,res,next){
+  const userId=req.header['user-id']
+  
+  if(numberOfRequestsForUser[userId]){
+  numberOfRequestsForUser[userId]=numberOfRequestsForUser[userId] +1;
+  
+    if(numberOfRequestsForUser[userId]>5){
+     res.status(404).json("too many requests")
   }
-  numberOfRequestsForUser[userId]=(numberOfRequestsForUser[userId]||0)+1;
-  if(numberOfRequestsForUser[userId]>5){
-    res.status(400).json("too many requests")
-  }
-  next();
+   next();
+}else{
+  numberOfRequestsForUser[userId]=1
+  next()
+}
 })
 app.get('/user', function(req, res) {
   res.status(200).json({ name: 'john' });
